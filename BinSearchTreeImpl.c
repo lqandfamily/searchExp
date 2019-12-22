@@ -132,7 +132,10 @@ int insertWithBalance(Node *node, Node father, elementType data) {
         (*node)->leftChild = NULL;
         (*node)->rightChild = NULL;
         (*node)->data = data;
-        (*node)->father = father;
+        /**
+         * 暂时放弃father指针的修改
+         */
+        (*node)->father = NULL;
     } else {
         if (data > (*node)->data) {                    //插入右子树
             insertWithBalance(&((*node)->rightChild), *node, data);
@@ -176,9 +179,14 @@ void singleLeftRotation(Node *imbalanceNode) {
     Node tmp = (*imbalanceNode)->rightChild->leftChild;
     Node newRootNode = (*imbalanceNode)->rightChild;
 
+    //TODO father指针的调整
+    //father指针调整
+/*    (*imbalanceNode)->father = newRootNode->rightChild;
+    (*imbalanceNode)->father = newRootNode->father;
+    (*imbalanceNode)->rightChild->leftChild->father = (*imbalanceNode);*/
+
     (*imbalanceNode)->rightChild->leftChild = (*imbalanceNode);
     (*imbalanceNode)->rightChild = tmp;
-
     //重置根节点
     (*imbalanceNode) = newRootNode;
 }
