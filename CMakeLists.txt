@@ -3,4 +3,4 @@ project(searchExp C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(searchExp main.c)
+add_executable(searchExp main.c BinSearch.h BinSearchImpl.c)
