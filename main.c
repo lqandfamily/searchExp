@@ -45,7 +45,7 @@ void testBasedBinSearchTree() {
  */
 void testRemoveNode() {
     elementType data[] = {50, 16, 56, 52, 8};
-    elementType removeElem = 52;
+    elementType removeElem = 56;
     Node root = createTree(data, sizeof(data) / sizeof(elementType));
     if (root != NULL) {
         printf("创建二叉排序树成功！\n");

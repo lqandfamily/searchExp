@@ -12,6 +12,11 @@
 #define SUCCESS 1
 #define NOT_FOUND -2
 
+//当前节点是父节点的左孩子还是右孩子
+#define LEFT_CHILD 1
+#define RIGHT_CHILD 2
+
+
 typedef int elementType;
 
 typedef struct node {
@@ -45,6 +50,15 @@ Node createTree(elementType data[], int n);
  */
 Node search(Node root, elementType searchElem);
 
+/**
+ *
+ * @param root
+ * @param searchElem
+ * @param isLeftOrChild 当前节点是父节点的左孩子还是右孩子，建议使用宏LEFT_CHILD，RIGHT_CHILD
+ * @return SUCCESS 找到元素并删除
+ *         NOT_FOUND 没有找到元素
+ */
+Node searchForRemove(Node root, elementType searchElem, int *isLeftOrChild);
 
 /**
  * 删除指定元素到节点

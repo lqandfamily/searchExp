@@ -37,6 +37,22 @@ Node createTree(elementType data[], int n) {
     return root;
 }
 
+Node searchForRemove(Node root, elementType searchElem, int *isLeftOrChild) {
+    if (root == NULL) {                                   //已经搜索完树仍未找到，返回NULL
+        return NULL;
+    } else if (root->data == searchElem) {                  //找到，返回节点(或许为NULL),
+        if (root->father->leftChild->data == searchElem) {
+            *isLeftOrChild = LEFT_CHILD;
+        } else {
+            *isLeftOrChild = RIGHT_CHILD;
+        }
+        return root;
+    } else if (searchElem > root->data) {
+        return searchForRemove(root->rightChild, searchElem, isLeftOrChild);        //查找右子树
+    } else {
+        return searchForRemove(root->leftChild, searchElem, isLeftOrChild);         //查找左子树
+    }
+}
 
 Node search(Node root, elementType searchElem) {
     if (root == NULL || root->data == searchElem) {                 //找到或已经搜索完树仍未找到，返回节点(或许为NULL)
@@ -50,7 +66,8 @@ Node search(Node root, elementType searchElem) {
 
 int removeNode(Node root, elementType removeElem) {
     //1，搜索到元素节点
-    Node removeNode = search(root, removeElem);
+    int isLeftOrRightChild;
+    Node removeNode = searchForRemove(root, removeElem, &isLeftOrRightChild);
     if (removeNode == NULL) {
         return NOT_FOUND;
     }
@@ -61,6 +78,31 @@ int removeNode(Node root, elementType removeElem) {
         removeNode->father->rightChild = NULL;
         free(removeNode);
     }
+        //b.removeNode只有左子树，或只有右子树
+        //左子树为空，重接右子树
+    else if (removeNode->leftChild == NULL) {
+        Node delNode = removeNode;
+        //重接，这波操作可以滴
+        if (isLeftOrRightChild == LEFT_CHILD) {
+            removeNode->father->leftChild = removeNode->rightChild;
+        } else {
+            removeNode->father->rightChild = removeNode->rightChild;
+        }
+        removeNode->rightChild->father = removeNode->father;
+        free(delNode);
+        //右子树为空，重接左子树
+    } else if (removeNode->rightChild == NULL) {
+        Node delNode = removeNode;
+        if (isLeftOrRightChild == LEFT_CHILD) {
+            removeNode->father->leftChild = removeNode->leftChild;
+        } else {
+            removeNode->father->rightChild = removeNode->leftChild;
+        }
+        //修改father指针
+        removeNode->leftChild->father = removeNode->father;
+        free(delNode);
+    }
+
 
     return SUCCESS;
 }
