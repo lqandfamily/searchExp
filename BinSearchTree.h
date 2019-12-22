@@ -43,6 +43,14 @@ int insertNode(Node *node, Node father, elementType data);
 Node createTree(elementType data[], int n);
 
 /**
+ * 创建平衡二叉树
+ * @param data
+ * @param n
+ * @return
+ */
+Node createBalanceTree(elementType data[], int n);
+
+/**
  * 在二叉排序树中搜索元素
  * @param root 树的根节点
  * @param searchElem
@@ -68,6 +76,47 @@ Node searchForRemove(Node root, elementType searchElem, int *isLeftOrChild);
  *         NOT_FOUND 没有找到元素
  */
 int removeNode(Node root, elementType removeElem);
+
+/**
+ * 插入节点的同时调整平衡性
+ * @param node
+ * @param data
+ */
+int insertWithBalance(Node *node, Node father, elementType data);
+
+/**
+ * 调整二叉排序树为平衡二叉树
+ * @param node
+ */
+void balance(Node node);
+
+/**
+ * 不平衡简单左旋
+ * 适用于RR型
+ * @param imbalanceNode
+ */
+void singleLeftRotation(Node imbalanceNode);
+
+/**
+ * 不平衡简单右旋
+ * 适用于LL型
+ * @param imbalanceNode
+ */
+void singleRightRotation(Node imbalanceNode);
+
+/**
+ * 不平衡对称左旋转
+ * 先左再右
+ * @param imbalanceNode
+ */
+void doubleLeftRotation(Node imbalanceNode);
+
+/**
+ * 不平衡对称右旋转
+ * @param imbalanceNode
+ */
+void doubleRightRotation(Node imbalanceNode);
+
 
 /**
  * 获取以当前节点为临时根的树的高度
