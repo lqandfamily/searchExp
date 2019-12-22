@@ -126,9 +126,6 @@ int removeNode(Node root, elementType removeElem) {
 int insertWithBalance(Node *node, Node father, elementType data) {
     if ((*node) == NULL) {                             //新建节点
         (*node) = (Node) malloc(sizeof(struct node));
-        /**
-         * BUG：MALL_ERROR按理要层层返回，这里就不做了
-         */
         if ((*node) == NULL) {
             return MALL_ERROR;
         }
@@ -138,25 +135,25 @@ int insertWithBalance(Node *node, Node father, elementType data) {
         (*node)->father = father;
     } else {
         if (data > (*node)->data) {                    //插入右子树
-            insertNode(&((*node)->rightChild), *node, data);
+            insertWithBalance(&((*node)->rightChild), *node, data);
         } else if (data < (*node)->data) {             //插入左子树
-            insertNode(&((*node)->leftChild), *node, data);
+            insertWithBalance(&((*node)->leftChild), *node, data);
         } else {
             return 0;                               //重复元素，不用插入
         }
-        //调整平衡
-        balance(*node);
     }
+    //调整平衡
+    balance(node);
     return SUCCESS;
 }
 
-void balance(Node node) {
-    int leftTreeHeight = height(node->leftChild);
-    int rightTreeHeight = height(node->rightChild);
+void balance(Node *node) {
+    int leftTreeHeight = height((*node)->leftChild);
+    int rightTreeHeight = height((*node)->rightChild);
 
     //左子树高
     if (leftTreeHeight - rightTreeHeight > 1) {
-        if (height(node->leftChild->leftChild) > height(node->leftChild->rightChild)) {
+        if (height((*node)->leftChild->leftChild) > height((*node)->leftChild->rightChild)) {
             //简单右旋
             singleRightRotation(node);
         } else {
@@ -166,7 +163,7 @@ void balance(Node node) {
 
     //右子树高
     if (rightTreeHeight - leftTreeHeight > 1) {
-        if (height(node->rightChild->rightChild) > height(node->rightChild->leftChild)) {
+        if (height((*node)->rightChild->rightChild) > height((*node)->rightChild->leftChild)) {
             //简单左旋
             singleLeftRotation(node);
         } else {
@@ -175,27 +172,36 @@ void balance(Node node) {
     }
 }
 
-void singleLeftRotation(Node imbalanceNode) {
-    Node tmp = imbalanceNode->rightChild->leftChild;
-    imbalanceNode->rightChild->leftChild = imbalanceNode;
-    imbalanceNode->rightChild = tmp;
+void singleLeftRotation(Node *imbalanceNode) {
+    Node tmp = (*imbalanceNode)->rightChild->leftChild;
+    Node newRootNode = (*imbalanceNode)->rightChild;
+
+    (*imbalanceNode)->rightChild->leftChild = (*imbalanceNode);
+    (*imbalanceNode)->rightChild = tmp;
+
+    //重置根节点
+    (*imbalanceNode) = newRootNode;
 }
 
-void singleRightRotation(Node imbalanceNode) {
-    Node tmp = imbalanceNode->leftChild->rightChild;
-    imbalanceNode->leftChild->rightChild = imbalanceNode;
-    imbalanceNode->leftChild = tmp;
+void singleRightRotation(Node *imbalanceNode) {
+    Node tmp = (*imbalanceNode)->leftChild->rightChild;
+    Node newRootNode = (*imbalanceNode)->leftChild;
+
+    (*imbalanceNode)->leftChild->rightChild = (*imbalanceNode);
+    (*imbalanceNode)->leftChild = tmp;
+
+    (*imbalanceNode) = newRootNode;
 }
 
-void doubleLeftRotation(Node imbalanceNode) {
+void doubleLeftRotation(Node *imbalanceNode) {
     //先左后右
-    singleLeftRotation(imbalanceNode->leftChild);
+    singleLeftRotation(&((*imbalanceNode)->leftChild));
     singleRightRotation(imbalanceNode);
 }
 
-void doubleRightRotation(Node imbalanceNode) {
+void doubleRightRotation(Node *imbalanceNode) {
     //先右后左
-    singleRightRotation(imbalanceNode->rightChild);
+    singleRightRotation(&((*imbalanceNode)->rightChild));
     singleLeftRotation(imbalanceNode);
 }
 

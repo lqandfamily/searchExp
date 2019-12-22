@@ -80,10 +80,34 @@ void testGetHeight() {
     }
 }
 
+/**
+ * 测试基本的二叉树创建和查找
+ */
+void testBasedBalancedBinTree() {
+    elementType data[] = {1, 2, 3, 4, 5};
+    elementType searchElem = 52;
+    Node root = createBalanceTree(data, sizeof(data) / sizeof(elementType));
+    if (root != NULL) {
+        printf("创建平衡二叉排序树成功！\n");
+    } else {
+        printf("创建平衡排序树失败！\n");
+    }
+
+/*    Node searchedNode = search(root, searchElem);
+    if (searchedNode != NULL) {
+        printf("找到元素：%d\n", searchedNode->data);
+    } else {
+        printf("查找元素失败！\n");
+    }*/
+
+    destroy(root);
+}
+
 int main() {
 //    testBinSearch();
 //    testBasedBinSearchTree();
 //    testRemoveNode();
-    testGetHeight();
+//    testGetHeight();
+    testBasedBalancedBinTree();
     return 0;
 }

@@ -88,34 +88,34 @@ int insertWithBalance(Node *node, Node father, elementType data);
  * 调整二叉排序树为平衡二叉树
  * @param node
  */
-void balance(Node node);
+void balance(Node *node);
 
 /**
  * 不平衡简单左旋
  * 适用于RR型
  * @param imbalanceNode
  */
-void singleLeftRotation(Node imbalanceNode);
+void singleLeftRotation(Node *imbalanceNode);
 
 /**
  * 不平衡简单右旋
  * 适用于LL型
  * @param imbalanceNode
  */
-void singleRightRotation(Node imbalanceNode);
+void singleRightRotation(Node *imbalanceNode);
 
 /**
  * 不平衡对称左旋转
  * 先左再右
  * @param imbalanceNode
  */
-void doubleLeftRotation(Node imbalanceNode);
+void doubleLeftRotation(Node *imbalanceNode);
 
 /**
  * 不平衡对称右旋转
  * @param imbalanceNode
  */
-void doubleRightRotation(Node imbalanceNode);
+void doubleRightRotation(Node *imbalanceNode);
 
 
 /**
