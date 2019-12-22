@@ -55,7 +55,12 @@ int removeNode(Node root, elementType removeElem) {
         return NOT_FOUND;
     }
     //2,删除元素
-
+    //a.叶子节点
+    if (removeNode->leftChild == NULL && removeNode->rightChild == NULL) {
+        removeNode->father->leftChild = NULL;
+        removeNode->father->rightChild = NULL;
+        free(removeNode);
+    }
 
     return SUCCESS;
 }

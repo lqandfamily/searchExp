@@ -30,18 +30,38 @@ void testBasedBinSearchTree() {
     }
 
 
-    Node searchedNode = search(root,searchElem);
-    if(searchedNode != NULL){
-        printf("找到元素：%d\n",searchedNode->data);
-    } else{
+    Node searchedNode = search(root, searchElem);
+    if (searchedNode != NULL) {
+        printf("找到元素：%d\n", searchedNode->data);
+    } else {
         printf("查找元素失败！\n");
     }
 
     destroy(root);
 }
 
+/**
+ * 测试移除二叉排序树到节点
+ */
+void testRemoveNode() {
+    elementType data[] = {50, 16, 56, 52, 8};
+    elementType removeElem = 52;
+    Node root = createTree(data, sizeof(data) / sizeof(elementType));
+    if (root != NULL) {
+        printf("创建二叉排序树成功！\n");
+    } else {
+        printf("创建排序树失败！\n");
+    }
+    if (removeNode(root, removeElem) == SUCCESS) {
+        printf("移除%d成功\n", removeElem);
+    } else {
+        printf("不存在此元素！\n");
+    }
+}
+
 int main() {
 //    testBinSearch();
-    testBasedBinSearchTree();
+//    testBasedBinSearchTree();
+    testRemoveNode();
     return 0;
 }
