@@ -10,6 +10,7 @@
 //状态码，动态内存申请失败
 #define MALL_ERROR -1
 #define SUCCESS 1
+#define NOT_FOUND -2
 
 typedef int elementType;
 
@@ -17,6 +18,7 @@ typedef struct node {
     elementType data;
     struct node *leftChild;
     struct node *rightChild;
+    struct node *father;
 } *Node;
 
 /**
@@ -25,7 +27,7 @@ typedef struct node {
  * @param data
  * @return MALLOC_ERROR 动态内存申请失败
  */
-int insertNode(Node *node, elementType data);
+int insertNode(Node *node, Node father, elementType data);
 
 /**
  * 从数组中创建二叉排序树
@@ -42,6 +44,16 @@ Node createTree(elementType data[], int n);
  * @return 返回查找元素所在节点，失败返回NULL
  */
 Node search(Node root, elementType searchElem);
+
+
+/**
+ * 删除指定元素到节点
+ * @param removeElem
+ * @param root
+ * @return SUCCESS 找到元素并删除
+ *         NOT_FOUND 没有找到元素
+ */
+int removeNode(Node root, elementType removeElem);
 
 /**
  * 销毁二叉排序树，释放资源

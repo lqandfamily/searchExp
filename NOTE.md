@@ -13,3 +13,15 @@ if (root == NULL || root->data == searchElem) {                 //找到或已�
         return root;
     }
 ```
+- 注意使用return形式的递归时的递归写法
+```c
+Node search(Node root, elementType searchElem) {
+    if (root == NULL || root->data == searchElem) {                 //找到或已经搜索完树仍未找到，返回节点(或许为NULL)
+        return root;
+    } else if (searchElem > root->data) {
+        return search(root->rightChild, searchElem);        //查找右子树
+    } else {
+        return search(root->leftChild, searchElem);         //查找左子树
+    }
+}
+```

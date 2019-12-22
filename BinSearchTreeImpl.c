@@ -3,7 +3,7 @@
  */
 #include "BinSearchTree.h"
 
-int insertNode(Node *node, elementType data) {
+int insertNode(Node *node, Node father, elementType data) {
     if ((*node) == NULL) {                             //新建节点
         (*node) = (Node) malloc(sizeof(struct node));
         /**
@@ -15,11 +15,12 @@ int insertNode(Node *node, elementType data) {
         (*node)->leftChild = NULL;
         (*node)->rightChild = NULL;
         (*node)->data = data;
+        (*node)->father = father;
     } else {
         if (data > (*node)->data) {                    //插入右子树
-            insertNode(&((*node)->rightChild), data);
+            insertNode(&((*node)->rightChild), *node, data);
         } else if (data < (*node)->data) {             //插入左子树
-            insertNode(&((*node)->leftChild), data);
+            insertNode(&((*node)->leftChild), *node, data);
         } else {
             return 0;                               //重复元素，不用插入
         }
@@ -31,7 +32,7 @@ Node createTree(elementType data[], int n) {
     int i;
     Node root = NULL;
     for (i = 0; i < n; i++) {
-        insertNode(&root, data[i]);
+        insertNode(&root, NULL, data[i]);
     }
     return root;
 }
@@ -47,6 +48,17 @@ Node search(Node root, elementType searchElem) {
     }
 }
 
+int removeNode(Node root, elementType removeElem) {
+    //1，搜索到元素节点
+    Node removeNode = search(root, removeElem);
+    if (removeNode == NULL) {
+        return NOT_FOUND;
+    }
+    //2,删除元素
+
+
+    return SUCCESS;
+}
 
 void destroy(Node root) {
     if (root != NULL) {
