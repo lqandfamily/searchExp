@@ -101,10 +101,29 @@ int removeNode(Node root, elementType removeElem) {
         //修改father指针
         removeNode->leftChild->father = removeNode->father;
         free(delNode);
+        /**
+         * 左右子树都存在
+         * remove节点的左子树重接到父节点的左子树，remove节点的右子树重接到remove节点左孩子的右孩子
+         */
+    } else {
+        /**
+         * TODO 左右子树都存在时还没有写呢
+         */
+
     }
 
 
     return SUCCESS;
+}
+
+int height(Node curNode) {
+    if (curNode == NULL) {
+        return 0;
+    } else {
+        int leftTreeHeight = height(curNode->leftChild);
+        int rightTreeHeight = height(curNode->rightChild);
+        return (leftTreeHeight > rightTreeHeight ? leftTreeHeight : rightTreeHeight) + 1;
+    }
 }
 
 void destroy(Node root) {

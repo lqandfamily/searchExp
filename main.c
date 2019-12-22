@@ -59,9 +59,31 @@ void testRemoveNode() {
     }
 }
 
+/**
+ * 测试获取指定节点的树的高度
+ */
+void testGetHeight() {
+    elementType data[] = {50, 16, 56, 52, 8, 7};
+    elementType searchElem = 50;
+    Node root = createTree(data, sizeof(data) / sizeof(elementType));
+    if (root != NULL) {
+        printf("创建二叉排序树成功！\n");
+    } else {
+        printf("创建排序树失败！\n");
+    }
+    Node searchedNode = search(root, searchElem);
+    if (searchedNode != NULL) {
+        printf("找到元素：%d\n", searchedNode->data);
+        printf("当前节点的高度为：%d\n", height(searchedNode));
+    } else {
+        printf("查找元素失败！\n");
+    }
+}
+
 int main() {
 //    testBinSearch();
 //    testBasedBinSearchTree();
-    testRemoveNode();
+//    testRemoveNode();
+    testGetHeight();
     return 0;
 }

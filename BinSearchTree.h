@@ -70,6 +70,14 @@ Node searchForRemove(Node root, elementType searchElem, int *isLeftOrChild);
 int removeNode(Node root, elementType removeElem);
 
 /**
+ * 获取以当前节点为临时根的树的高度
+ * 本函数目的在于服务二叉树平衡调整
+ * @param root
+ * @return
+ */
+int height(Node curNode);
+
+/**
  * 销毁二叉排序树，释放资源
  * @param root
  */
